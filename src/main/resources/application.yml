@@ -1,0 +1,41 @@
+spring:
+  application.name: lecture-registration-management
+
+  datasource:
+    url: jdbc:h2:mem:hhplus_chap2
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+
+logging:
+  level:
+    hhplus.clean_architecture: debug
+    org:
+      hibernate:
+        type: trace
+        SQL: debug
+      springframework:
+        jdbc: debug
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "test"
+
+  datasource:
+    url: jdbc:h2:mem:hhplus_chap2_test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
