@@ -12,12 +12,16 @@ spring:
       enabled: true
       path: '/h2-console'
 
+  sql.init.mode: embedded
+
   jpa:
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
         show_sql: true
+        format_sql: true
+    defer-datasource-initialization: true
 
 logging:
   level:

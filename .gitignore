@@ -1,3 +1,6 @@
+### Custom ###
+src/main/resources/data.sql
+
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,kotlin,gradle,intellij+all,eclipse,vs
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,kotlin,gradle,intellij+all,eclipse,vs
 
