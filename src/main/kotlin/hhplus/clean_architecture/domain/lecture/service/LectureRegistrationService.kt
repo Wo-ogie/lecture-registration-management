@@ -20,4 +20,14 @@ class LectureRegistrationService(
     fun existsByUserAndLecture(userId: Long, lectureId: Long): Boolean {
         return lectureRegistrationRepository.existsByUserAndLecture(userId, lectureId)
     }
+
+    /**
+     * 특정 강의에 대해 신청 이력 개수를 조회한다.
+     *
+     * @param lectureId 신청 이력 개수를 조회하고자 하는 강의의 id
+     * @return 특정 강의에 대한 신청 이력 개수
+     */
+    fun getCountByLecture(lectureId: Long): Long {
+        TODO("Not yet implemented")
+    }
 }

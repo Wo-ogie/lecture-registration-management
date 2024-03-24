@@ -39,4 +39,21 @@ class LectureRegistrationServiceTest {
         then(lectureRegistrationRepository).shouldHaveNoMoreInteractions()
         assertThat(actualResult).isEqualTo(expectedResult)
     }
+
+    @Test
+    fun `강의 id가 주어지고, 주어진 강의에 대한 신청 이력 개수를 조회한다`() {
+        // given
+        val lectureId = 1L
+        val expectedResult = 5L
+        given(lectureRegistrationRepository.getCountByLecture(lectureId))
+            .willReturn(expectedResult)
+
+        // when
+        val actualResult = sut.getCountByLecture(lectureId)
+
+        // then
+        then(lectureRegistrationRepository).should().getCountByLecture(lectureId)
+        then(lectureRegistrationRepository).shouldHaveNoMoreInteractions()
+        assertThat(actualResult).isEqualTo(expectedResult)
+    }
 }
