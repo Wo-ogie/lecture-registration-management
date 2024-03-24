@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 class LectureRegistrationJpaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "lecrture_registration_id")
+    @Column(name = "lecture_registration_id")
     val id: Long,
 
     val userId: Long,
