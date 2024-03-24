@@ -28,6 +28,6 @@ class LectureRegistrationService(
      * @return 특정 강의에 대한 신청 이력 개수
      */
     fun getCountByLecture(lectureId: Long): Long {
-        TODO("Not yet implemented")
+        return lectureRegistrationRepository.getCountByLecture(lectureId)
     }
 }
