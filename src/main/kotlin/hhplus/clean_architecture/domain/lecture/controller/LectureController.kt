@@ -18,6 +18,7 @@ class LectureController(
         @RequestParam userId: Long,
         @RequestParam lectureId: Long,
     ): CheckLectureRegistrationResponse {
-        TODO("Not yet implemented")
+        val isRegistered = lectureRegistrationService.existsByUserAndLecture(userId, lectureId)
+        return CheckLectureRegistrationResponse(isRegistered)
     }
 }
