@@ -18,6 +18,6 @@ class LectureRegistrationService(
      * @return 강의 등록 여부. 주어진 유저가 해당 강의에 등록했다면 true, 그렇지 않다면 false
      */
     fun existsByUserAndLecture(userId: Long, lectureId: Long): Boolean {
-        TODO("Not yet implemented")
+        return lectureRegistrationRepository.existsByUserAndLecture(userId, lectureId)
     }
 }
