@@ -43,14 +43,16 @@
         // TODO: 작성 예정
         ```
 2. **특강 신청 완료 여부 조회 API**
-    - Endpoint: `/api/lectures/check-registration`
+    - Endpoint: `/api/lectures/check-registrations`
     - Method: `GET`
     - Request parameters
         - `userId`
         - `lectureId`
     - Response
         ```json
-        // TODO: 작성 예정
+        {
+          "isRegistered": true
+        }
         ```
 
 ## ERD
