@@ -28,26 +28,38 @@
 
 ## API Specs
 
-1. **특강 신청 API**
-    - Endpoint: `/api/lectures/register`
-    - Method: `POST`
-    - Request body
-        ```json 
+### 1. **특강 신청 API**
+- Endpoint: `/api/lectures/{lectureId}/register`
+- Method: `POST`
+- Request body
+    ```json 
+    {
+        "userId": 1
+    }
+    ```
+- Responses
+    - **201 Created**
+        ```json
         {
-            "userId": 1,    
-            "lectureId": 2  
+          "id": 1,
+          "userId": 2,
+          "lectureId": 3,
+          "registrationTime": "2024-03-25T21:04:06.224167"
         }
         ```
-    - Response
-        ```json
-        // TODO: 작성 예정
-        ```
-2. **특강 신청 완료 여부 조회 API**
-    - Endpoint: `/api/lectures/{lectureId}/check-registrations`
-    - Method: `GET`
-    - Request parameters
-        - `userId`
-    - Response
+    - **409 Conflict**
+        - 이미 수강중인 강의인 경우
+        - 수강 가능 인원이 꽉 찬 경우
+    - **423 Locked**
+        - 아직 수강 가능 시간이 되지 않은 경우
+
+### 2. **특강 신청 완료 여부 조회 API**
+- Endpoint: `/api/lectures/{lectureId}/check-registrations`
+- Method: `GET`
+- Request parameters
+    - `userId`
+- Responses
+    - **200 OK**
         ```json
         {
           "isRegistered": true
