@@ -86,7 +86,7 @@ class LectureRegistrationServiceTest {
             lectureId = lectureId,
             registrationTime = LocalDateTime.now()
         )
-        given(lectureService.getById(lectureId))
+        given(lectureService.getByIdWithLock(lectureId))
             .willReturn(lecture)
         given(lectureRegistrationRepository.existsByUserAndLecture(userId, lectureId))
             .willReturn(false)
@@ -99,7 +99,7 @@ class LectureRegistrationServiceTest {
         val actualResult = sut.register(userId, lectureId)
 
         // then
-        then(lectureService).should().getById(lectureId)
+        then(lectureService).should().getByIdWithLock(lectureId)
         then(lectureRegistrationRepository).should().existsByUserAndLecture(userId, lectureId)
         then(lectureRegistrationRepository).should().getCountByLecture(lectureId)
         then(lectureRegistrationRepository).should().save(any())
@@ -119,14 +119,14 @@ class LectureRegistrationServiceTest {
             title = "test",
             registrationStartTime = LocalDateTime.of(2025, 1, 1, 12, 0)
         )
-        given(lectureService.getById(lectureId))
+        given(lectureService.getByIdWithLock(lectureId))
             .willReturn(lecture)
 
         // when
         val throwable = catchThrowable { sut.register(userId, lectureId) }
 
         // then
-        then(lectureService).should().getById(lectureId)
+        then(lectureService).should().getByIdWithLock(lectureId)
         verifyEveryMocksShouldHaveNoMoreInteractions()
         assertThat(throwable).isInstanceOf(LectureRegistrationNotStartedException::class.java)
     }
@@ -141,7 +141,7 @@ class LectureRegistrationServiceTest {
             title = "test",
             registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
         )
-        given(lectureService.getById(lectureId))
+        given(lectureService.getByIdWithLock(lectureId))
             .willReturn(lecture)
         given(lectureRegistrationRepository.existsByUserAndLecture(userId, lectureId))
             .willReturn(true)
@@ -150,7 +150,7 @@ class LectureRegistrationServiceTest {
         val throwable = catchThrowable { sut.register(userId, lectureId) }
 
         // then
-        then(lectureService).should().getById(lectureId)
+        then(lectureService).should().getByIdWithLock(lectureId)
         then(lectureRegistrationRepository).should().existsByUserAndLecture(userId, lectureId)
         verifyEveryMocksShouldHaveNoMoreInteractions()
         assertThat(throwable).isInstanceOf(LectureAlreadyRegisteredException::class.java)
@@ -167,7 +167,7 @@ class LectureRegistrationServiceTest {
             maxParticipants = 30,
             registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
         )
-        given(lectureService.getById(lectureId))
+        given(lectureService.getByIdWithLock(lectureId))
             .willReturn(lecture)
         given(lectureRegistrationRepository.existsByUserAndLecture(userId, lectureId))
             .willReturn(false)
@@ -178,7 +178,7 @@ class LectureRegistrationServiceTest {
         val throwable = catchThrowable { sut.register(userId, lectureId) }
 
         // then
-        then(lectureService).should().getById(lectureId)
+        then(lectureService).should().getByIdWithLock(lectureId)
         then(lectureRegistrationRepository).should().existsByUserAndLecture(userId, lectureId)
         then(lectureRegistrationRepository).should().getCountByLecture(lectureId)
         verifyEveryMocksShouldHaveNoMoreInteractions()

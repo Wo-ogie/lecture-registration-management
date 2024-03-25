@@ -29,6 +29,7 @@
 ## API Specs
 
 ### 1. **특강 신청 API**
+
 - Endpoint: `/api/lectures/{lectureId}/register`
 - Method: `POST`
 - Request body
@@ -54,6 +55,7 @@
         - 아직 수강 가능 시간이 되지 않은 경우
 
 ### 2. **특강 신청 완료 여부 조회 API**
+
 - Endpoint: `/api/lectures/{lectureId}/check-registrations`
 - Method: `GET`
 - Request parameters

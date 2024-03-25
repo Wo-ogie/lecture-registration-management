@@ -39,7 +39,7 @@ class LectureRegistrationService(
 
     @Transactional
     fun register(userId: Long, lectureId: Long): LectureRegistration {
-        val lecture = lectureService.getById(lectureId)
+        val lecture = lectureService.getByIdWithLock(lectureId)
         val now = LocalDateTime.now()
 
         if (now.isBefore(lecture.registrationStartTime)) {

@@ -7,6 +7,9 @@ interface LectureRepository {
 
     @Throws(LectureNotFoundException::class)
     fun getById(lectureId: Long): Lecture
+
+    @Throws(LectureNotFoundException::class)
+    fun getByIdWithLock(lectureId: Long): Lecture
     
     fun save(lecture: Lecture): Lecture
 }
