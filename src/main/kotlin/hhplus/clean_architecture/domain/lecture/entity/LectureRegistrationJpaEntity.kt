@@ -12,11 +12,6 @@ import java.time.LocalDateTime
 )
 @Entity
 class LectureRegistrationJpaEntity(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "lecture_registration_id")
-    val id: Long? = null,
-
     val userId: Long,
 
     @JoinColumn(name = "lecture_id")
@@ -24,4 +19,28 @@ class LectureRegistrationJpaEntity(
     val lecture: LectureJpaEntity,
 
     val registrationTime: LocalDateTime,
-)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "lecture_registration_id")
+    val id: Long? = null,
+) {
+    companion object {
+        fun from(lectureRegistration: LectureRegistration, lecture: LectureJpaEntity): LectureRegistrationJpaEntity {
+            return LectureRegistrationJpaEntity(
+                userId = lectureRegistration.userId,
+                lecture = lecture,
+                registrationTime = lectureRegistration.registrationTime
+            )
+        }
+    }
+
+    fun toDomain(): LectureRegistration {
+        return LectureRegistration(
+            id = id,
+            userId = userId,
+            lectureId = lecture.id!!,
+            registrationTime = registrationTime
+        )
+    }
+}
