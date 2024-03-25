@@ -4,7 +4,9 @@ import hhplus.clean_architecture.domain.lecture.dto.request.LectureRegisterReque
 import hhplus.clean_architecture.domain.lecture.dto.response.CheckLectureRegistrationResponse
 import hhplus.clean_architecture.domain.lecture.dto.response.LectureRegisterResponse
 import hhplus.clean_architecture.domain.lecture.service.LectureRegistrationService
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.net.URI
 
 @RequestMapping("/api/lectures")
 @RestController
@@ -24,7 +26,13 @@ class LectureController(
     fun register(
         @PathVariable lectureId: Long,
         @RequestBody lectureRegisterRequest: LectureRegisterRequest,
-    ): LectureRegisterResponse {
-        TODO("Not yet implemented")
+    ): ResponseEntity<LectureRegisterResponse> {
+        val registration = lectureRegistrationService.register(
+            userId = lectureRegisterRequest.userId,
+            lectureId = lectureId
+        )
+        return ResponseEntity
+            .created(URI.create("/api/lectures/${registration.id}/check-registrations"))
+            .body(LectureRegisterResponse.from(registration))
     }
 }

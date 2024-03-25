@@ -49,11 +49,11 @@ class LectureControllerTest @Autowired constructor(
             post("/api/lectures/$lectureId/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(registerRequest))
-        ).andExpect(status().isOk)
+        ).andExpect(status().isCreated)
             .andExpect(jsonPath("$.id").value(expectedResult.id))
             .andExpect(jsonPath("$.userId").value(expectedResult.userId))
             .andExpect(jsonPath("$.lectureId").value(expectedResult.lectureId))
-            .andExpect(jsonPath("$.registrationTime").value(expectedResult.registrationTime))
+            .andExpect(jsonPath("$.registrationTime").value(expectedResult.registrationTime.toString()))
         then(lectureRegistrationService).should().register(userId, lectureId)
         then(lectureRegistrationService).shouldHaveNoMoreInteractions()
     }
