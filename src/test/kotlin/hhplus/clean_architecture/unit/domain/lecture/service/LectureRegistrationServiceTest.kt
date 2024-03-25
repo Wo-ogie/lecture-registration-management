@@ -110,28 +110,6 @@ class LectureRegistrationServiceTest {
     }
 
     @Test
-    fun `주어진 특강 id에 해당하는 특강을 신청한다, 이때 존재하지 않는 특강이라면, 예외가 발생한다`() {
-        // given
-        val userId = 1L
-        val lectureId = 2L
-        val lecture = Lecture(
-            id = lectureId,
-            title = "test",
-            registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
-        )
-        given(lectureService.getById(lectureId))
-            .willReturn(lecture)
-
-        // when
-        val throwable = catchThrowable { sut.register(userId, lectureId) }
-
-        // then
-        then(lectureService).should().getById(lectureId)
-        verifyEveryMocksShouldHaveNoMoreInteractions()
-        assertThat(throwable).isInstanceOf(LectureNotFoundException::class.java)
-    }
-
-    @Test
     fun `주어진 특강 id에 해당하는 특강을 신청한다, 아직 신청 가능 시각이 되지 않은 특강이라면, 예외가 발생한다`() {
         // given
         val userId = 1L
@@ -166,7 +144,7 @@ class LectureRegistrationServiceTest {
         given(lectureService.getById(lectureId))
             .willReturn(lecture)
         given(lectureRegistrationRepository.existsByUserAndLecture(userId, lectureId))
-            .willReturn(false)
+            .willReturn(true)
 
         // when
         val throwable = catchThrowable { sut.register(userId, lectureId) }
