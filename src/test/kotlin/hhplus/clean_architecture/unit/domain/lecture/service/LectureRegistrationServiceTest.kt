@@ -5,6 +5,7 @@ import hhplus.clean_architecture.domain.lecture.entity.LectureRegistration
 import hhplus.clean_architecture.domain.lecture.exception.LectureAlreadyRegisteredException
 import hhplus.clean_architecture.domain.lecture.exception.LectureCapacityExceededException
 import hhplus.clean_architecture.domain.lecture.exception.LectureNotFoundException
+import hhplus.clean_architecture.domain.lecture.exception.LectureRegistrationNotStartedException
 import hhplus.clean_architecture.domain.lecture.repository.LectureRegistrationRepository
 import hhplus.clean_architecture.domain.lecture.service.LectureRegistrationService
 import hhplus.clean_architecture.domain.lecture.service.LectureService
@@ -74,7 +75,11 @@ class LectureRegistrationServiceTest {
         // given
         val userId = 1L
         val lectureId = 2L
-        val lecture = Lecture(id = lectureId, title = "test")
+        val lecture = Lecture(
+            id = lectureId,
+            title = "test",
+            registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
+        )
         val expectedResult = LectureRegistration(
             id = 3L,
             userId = userId,
@@ -109,7 +114,11 @@ class LectureRegistrationServiceTest {
         // given
         val userId = 1L
         val lectureId = 2L
-        val lecture = Lecture(id = lectureId, title = "test")
+        val lecture = Lecture(
+            id = lectureId,
+            title = "test",
+            registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
+        )
         given(lectureService.getById(lectureId))
             .willReturn(lecture)
 
@@ -123,11 +132,37 @@ class LectureRegistrationServiceTest {
     }
 
     @Test
+    fun `주어진 특강 id에 해당하는 특강을 신청한다, 아직 신청 가능 시각이 되지 않은 특강이라면, 예외가 발생한다`() {
+        // given
+        val userId = 1L
+        val lectureId = 2L
+        val lecture = Lecture(
+            id = lectureId,
+            title = "test",
+            registrationStartTime = LocalDateTime.of(2025, 1, 1, 12, 0)
+        )
+        given(lectureService.getById(lectureId))
+            .willReturn(lecture)
+
+        // when
+        val throwable = catchThrowable { sut.register(userId, lectureId) }
+
+        // then
+        then(lectureService).should().getById(lectureId)
+        verifyEveryMocksShouldHaveNoMoreInteractions()
+        assertThat(throwable).isInstanceOf(LectureRegistrationNotStartedException::class.java)
+    }
+
+    @Test
     fun `주어진 특강 id에 해당하는 특강을 신청한다, 이미 신청한 특강이라면, 예외가 발생한다`() {
         // given
         val userId = 1L
         val lectureId = 2L
-        val lecture = Lecture(id = lectureId, title = "test")
+        val lecture = Lecture(
+            id = lectureId,
+            title = "test",
+            registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
+        )
         given(lectureService.getById(lectureId))
             .willReturn(lecture)
         given(lectureRegistrationRepository.existsByUserAndLecture(userId, lectureId))
@@ -151,7 +186,8 @@ class LectureRegistrationServiceTest {
         val lecture = Lecture(
             id = lectureId,
             title = "test",
-            maxParticipants = 30
+            maxParticipants = 30,
+            registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
         )
         given(lectureService.getById(lectureId))
             .willReturn(lecture)

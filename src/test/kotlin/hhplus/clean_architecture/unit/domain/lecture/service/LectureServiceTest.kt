@@ -14,6 +14,7 @@ import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.given
 import org.mockito.kotlin.then
+import java.time.LocalDateTime
 
 @DisplayName("Service - Lecture")
 @ExtendWith(MockitoExtension::class)
@@ -29,7 +30,12 @@ class LectureServiceTest {
     fun `강의 id가 주어지고, id와 일치하는 강의를 단건 조회한다`() {
         // given
         val lectureId = 1L
-        val expectedResult = Lecture(lectureId, "title", 30)
+        val expectedResult = Lecture(
+            id = lectureId,
+            title = "title",
+            maxParticipants = 30,
+            registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
+        )
         given(lectureRepository.getById(lectureId))
             .willReturn(expectedResult)
 
@@ -38,7 +44,7 @@ class LectureServiceTest {
 
         // then
         then(lectureRepository).should().getById(lectureId)
-        then(lectureRepository).shouldHaveNoMoreInteractions()
+        verifyEveryMocksShouldHaveNoMoreInteractions()
         assertThat(actualResult).isEqualTo(expectedResult)
     }
 
@@ -54,7 +60,11 @@ class LectureServiceTest {
 
         // then
         then(lectureRepository).should().getById(lectureId)
-        then(lectureRepository).shouldHaveNoMoreInteractions()
+        verifyEveryMocksShouldHaveNoMoreInteractions()
         assertThat(throwable).isInstanceOf(LectureNotFoundException::class.java)
+    }
+
+    private fun verifyEveryMocksShouldHaveNoMoreInteractions() {
+        then(lectureRepository).shouldHaveNoMoreInteractions()
     }
 }

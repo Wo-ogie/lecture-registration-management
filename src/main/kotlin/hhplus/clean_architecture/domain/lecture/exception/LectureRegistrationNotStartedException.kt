@@ -1,0 +1,3 @@
+package hhplus.clean_architecture.domain.lecture.exception
+
+class LectureRegistrationNotStartedException 
