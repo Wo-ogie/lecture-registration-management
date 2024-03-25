@@ -4,7 +4,6 @@ import hhplus.clean_architecture.domain.lecture.controller.LectureController
 import hhplus.clean_architecture.domain.lecture.service.LectureRegistrationService
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.mockito.BDDMockito
 import org.mockito.BDDMockito.given
 import org.mockito.BDDMockito.then
 import org.springframework.beans.factory.annotation.Autowired
@@ -34,9 +33,8 @@ class LectureControllerTest(
 
         // when & then
         mvc.perform(
-            get("/api/lectures/check-registrations")
+            get("/api/lectures/$lectureId/check-registrations")
                 .param("userId", userId.toString())
-                .param("lectureId", lectureId.toString())
         ).andExpect(status().isOk)
             .andExpect(jsonPath("$.isRegistered").value(expectedResult))
         then(lectureRegistrationService).should().existsByUserAndLecture(userId, lectureId)

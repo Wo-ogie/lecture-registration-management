@@ -43,11 +43,10 @@
         // TODO: 작성 예정
         ```
 2. **특강 신청 완료 여부 조회 API**
-    - Endpoint: `/api/lectures/check-registrations`
+    - Endpoint: `/api/lectures/{lectureId}/check-registrations`
     - Method: `GET`
     - Request parameters
         - `userId`
-        - `lectureId`
     - Response
         ```json
         {
