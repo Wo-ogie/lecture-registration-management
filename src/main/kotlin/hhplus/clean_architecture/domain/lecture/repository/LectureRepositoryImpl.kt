@@ -14,4 +14,9 @@ class LectureRepositoryImpl(
             .orElseThrow { LectureNotFoundException() }
         return lecture.toDomain()
     }
+
+    override fun save(lecture: Lecture): Lecture {
+        val savedLecture = lectureJpaRepository.save(LectureJpaEntity.from(lecture))
+        return savedLecture.toDomain()
+    }
 }

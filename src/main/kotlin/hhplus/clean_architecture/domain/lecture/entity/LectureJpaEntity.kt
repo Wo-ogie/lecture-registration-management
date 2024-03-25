@@ -17,6 +17,16 @@ class LectureJpaEntity(
     @Column(name = "lecture_id")
     val id: Long? = null,
 ) {
+    companion object {
+        fun from(lecture: Lecture): LectureJpaEntity {
+            return LectureJpaEntity(
+                title = lecture.title,
+                registrationStartTime = lecture.registrationStartTime,
+                maxParticipants = lecture.maxParticipants
+            )
+        }
+    }
+
     fun toDomain(): Lecture {
         return Lecture(
             id = id,

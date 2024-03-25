@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
+import org.mockito.kotlin.any
 import org.mockito.kotlin.given
 import org.mockito.kotlin.then
 import java.time.LocalDateTime
@@ -62,6 +63,53 @@ class LectureServiceTest {
         then(lectureRepository).should().getById(lectureId)
         verifyEveryMocksShouldHaveNoMoreInteractions()
         assertThat(throwable).isInstanceOf(LectureNotFoundException::class.java)
+    }
+
+    @Test
+    fun `최대 수강 인원을 포함한 강의 정보가 주어지고, 주어진 정보로 신규 강의를 생성한다`() {
+        // given
+        val title = "title"
+        val registrationStartTime = LocalDateTime.of(2024, 4, 1, 12, 0)
+        val maxParticipants = 30
+        val expectedResult = Lecture(
+            title = title,
+            registrationStartTime = registrationStartTime,
+            maxParticipants = maxParticipants,
+            id = 1L
+        )
+        given(lectureRepository.save(any()))
+            .willReturn(expectedResult)
+
+        // when
+        val actualResult = sut.create(title, registrationStartTime, maxParticipants)
+
+        // then
+        then(lectureRepository).should().save(any())
+        verifyEveryMocksShouldHaveNoMoreInteractions()
+        assertThat(actualResult).isEqualTo(expectedResult)
+    }
+
+    @Test
+    fun `최대 수강 인원을 제외한 강의 정보가 주어지고, 주어진 정보로 신규 강의를 생성하면, 기본 30으로 최대 수강 인원이 설정된 강의가 생성된다`() {
+        // given
+        val title = "title"
+        val registrationStartTime = LocalDateTime.of(2024, 4, 1, 12, 0)
+        val expectedResult = Lecture(
+            title = title,
+            registrationStartTime = registrationStartTime,
+            maxParticipants = 30,
+            id = 1L
+        )
+        given(lectureRepository.save(any()))
+            .willReturn(expectedResult)
+
+        // when
+        val actualResult = sut.create(title = title, registrationStartTime = registrationStartTime)
+
+        // then
+        then(lectureRepository).should().save(any())
+        verifyEveryMocksShouldHaveNoMoreInteractions()
+        assertThat(actualResult).isEqualTo(expectedResult)
     }
 
     private fun verifyEveryMocksShouldHaveNoMoreInteractions() {
