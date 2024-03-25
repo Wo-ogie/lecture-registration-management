@@ -1,9 +1,13 @@
 package hhplus.clean_architecture.domain.lecture.service
 
 import hhplus.clean_architecture.domain.lecture.entity.LectureRegistration
+import hhplus.clean_architecture.domain.lecture.exception.LectureAlreadyRegisteredException
+import hhplus.clean_architecture.domain.lecture.exception.LectureCapacityExceededException
+import hhplus.clean_architecture.domain.lecture.exception.LectureRegistrationNotStartedException
 import hhplus.clean_architecture.domain.lecture.repository.LectureRegistrationRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Transactional(readOnly = true)
 @Service
@@ -35,6 +39,28 @@ class LectureRegistrationService(
 
     @Transactional
     fun register(userId: Long, lectureId: Long): LectureRegistration {
-        TODO("Not yet implemented")
+        val lecture = lectureService.getById(lectureId)
+        val now = LocalDateTime.now()
+
+        if (now.isBefore(lecture.registrationStartTime)) {
+            throw LectureRegistrationNotStartedException()
+        }
+
+        if (lectureRegistrationRepository.existsByUserAndLecture(userId, lectureId)) {
+            throw LectureAlreadyRegisteredException()
+        }
+
+        val currentParticipants = lectureRegistrationRepository.getCountByLecture(lectureId)
+        if (currentParticipants >= lecture.maxParticipants) {
+            throw LectureCapacityExceededException()
+        }
+
+        return lectureRegistrationRepository.save(
+            LectureRegistration(
+                userId = userId,
+                lectureId = lectureId,
+                registrationTime = now
+            )
+        )
     }
 }
