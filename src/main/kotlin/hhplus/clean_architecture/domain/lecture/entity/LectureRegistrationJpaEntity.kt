@@ -15,7 +15,7 @@ class LectureRegistrationJpaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lecture_registration_id")
-    val id: Long,
+    val id: Long? = null,
 
     val userId: Long,
 

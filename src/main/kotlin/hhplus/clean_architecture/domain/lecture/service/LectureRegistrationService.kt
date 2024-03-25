@@ -1,5 +1,6 @@
 package hhplus.clean_architecture.domain.lecture.service
 
+import hhplus.clean_architecture.domain.lecture.entity.LectureRegistration
 import hhplus.clean_architecture.domain.lecture.repository.LectureRegistrationRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -7,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 @Service
 class LectureRegistrationService(
+    private val lectureService: LectureService,
     private val lectureRegistrationRepository: LectureRegistrationRepository,
 ) {
 
@@ -29,5 +31,10 @@ class LectureRegistrationService(
      */
     fun getCountByLecture(lectureId: Long): Long {
         return lectureRegistrationRepository.getCountByLecture(lectureId)
+    }
+
+    @Transactional
+    fun register(userId: Long, lectureId: Long): LectureRegistration {
+        TODO("Not yet implemented")
     }
 }
