@@ -8,9 +8,17 @@ class LectureJpaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lecture_id")
-    val id: Long,
+    val id: Long? = null,
 
     val title: String,
 
-    val maxParticipants: Int,
-)
+    val maxParticipants: Int = 30,
+) {
+    fun toDomain(): Lecture {
+        return Lecture(
+            id = id,
+            title = title,
+            maxParticipants = maxParticipants
+        )
+    }
+}
