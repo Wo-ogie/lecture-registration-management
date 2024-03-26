@@ -37,6 +37,16 @@ class LectureRegistrationService(
         return lectureRegistrationRepository.getCountByLecture(lectureId)
     }
 
+    /**
+     * 강의에 등록한다. (수강 신청)
+     *
+     * @param userId 강의에 등록하고자 하는 유저의 id
+     * @param lectureId 등록할 강의 id
+     * @return 강의 등록 정보
+     * @throws LectureRegistrationNotStartedException 수강 신청 가능 시각이 되지 않은 경우. 즉 수강 신청이 불가능한 경우
+     * @throws LectureAlreadyRegisteredException 이미 수강중인 강의인 경우
+     * @throws LectureCapacityExceededException 수강 최대 인원이 꽉 찬 경우
+     */
     @Transactional
     fun register(userId: Long, lectureId: Long): LectureRegistration {
         val lecture = lectureService.getByIdWithLock(lectureId)
