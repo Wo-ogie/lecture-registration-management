@@ -2,8 +2,10 @@ package hhplus.clean_architecture.unit.lecture.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import hhplus.clean_architecture.lecture.controller.LectureController
+import hhplus.clean_architecture.lecture.domain.Lecture
 import hhplus.clean_architecture.lecture.domain.LectureRegistration
 import hhplus.clean_architecture.lecture.domain.LectureRegistrationService
+import hhplus.clean_architecture.lecture.domain.LectureService
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
@@ -26,7 +28,33 @@ class LectureControllerTest @Autowired constructor(
     private val mapper: ObjectMapper,
 ) {
     @MockBean
+    private lateinit var lectureService: LectureService
+
+    @MockBean
     private lateinit var lectureRegistrationService: LectureRegistrationService
+
+    @Test
+    fun `전체 강의 목록을 조회한다`() {
+        // given
+        val expectedResult = listOf(
+            Lecture(
+                id = 1L,
+                title = "test",
+                lectureTime = LocalDateTime.of(2024, 4, 1, 15, 0),
+                registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
+            )
+        )
+        given(lectureService.findAll())
+            .willReturn(expectedResult)
+
+        // when & then
+        mvc.perform(
+            get("/api/lectures")
+        ).andExpect(status().isOk)
+            .andExpect(jsonPath("$.lectures.size()").value(expectedResult.size))
+        then(lectureService).should().findAll()
+        verifyEveryMocksShouldHaveNoMoreInteractions()
+    }
 
     @Test
     fun `유저와 강의 id가 주어지고, 주어진 강의를 신청한다`() {
@@ -54,7 +82,7 @@ class LectureControllerTest @Autowired constructor(
             .andExpect(jsonPath("$.lectureId").value(expectedResult.lectureId))
             .andExpect(jsonPath("$.registrationTime").exists())
         then(lectureRegistrationService).should().register(userId, lectureId)
-        then(lectureRegistrationService).shouldHaveNoMoreInteractions()
+        verifyEveryMocksShouldHaveNoMoreInteractions()
     }
 
     @Test
@@ -73,6 +101,11 @@ class LectureControllerTest @Autowired constructor(
         ).andExpect(status().isOk)
             .andExpect(jsonPath("$.isRegistered").value(expectedResult))
         then(lectureRegistrationService).should().existsByUserAndLecture(userId, lectureId)
+        verifyEveryMocksShouldHaveNoMoreInteractions()
+    }
+
+    private fun verifyEveryMocksShouldHaveNoMoreInteractions() {
+        then(lectureService).shouldHaveNoMoreInteractions()
         then(lectureRegistrationService).shouldHaveNoMoreInteractions()
     }
 }

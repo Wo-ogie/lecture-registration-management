@@ -67,6 +67,26 @@
           "isRegistered": true
         }
         ```
+      
+### 3. **전체 강의 목록 조회 API**
+
+- Endpoint: `/api/lectures/`
+- Method: `GET`
+- Responses
+    - **200 OK**
+        ```json
+        {
+            "lectures": [
+                {
+                    "id": 1,
+                    "title": "항해 백엔드",
+                    "lectureTime": "2024-04-01T12:00:00",
+                    "registrationStartTime": "2024-03-01T12:00:00",
+                    "maxParticipants": 30
+                }
+            ]
+        }
+        ``` 
 
 ## ERD
 
