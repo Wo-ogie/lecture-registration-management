@@ -9,6 +9,8 @@ import java.time.LocalDateTime
 class LectureJpaEntity(
     val title: String,
 
+    val lectureTime: LocalDateTime,
+
     val registrationStartTime: LocalDateTime,
 
     val maxParticipants: Int = 30,
@@ -22,6 +24,7 @@ class LectureJpaEntity(
         fun from(lecture: Lecture): LectureJpaEntity {
             return LectureJpaEntity(
                 title = lecture.title,
+                lectureTime = lecture.lectureTime,
                 registrationStartTime = lecture.registrationStartTime,
                 maxParticipants = lecture.maxParticipants
             )
@@ -32,6 +35,7 @@ class LectureJpaEntity(
         return Lecture(
             id = id,
             title = title,
+            lectureTime = lectureTime,
             maxParticipants = maxParticipants,
             registrationStartTime = registrationStartTime
         )

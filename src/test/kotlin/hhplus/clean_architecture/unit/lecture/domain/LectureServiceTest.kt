@@ -33,6 +33,7 @@ class LectureServiceTest {
         val expectedResult = Lecture(
             id = lectureId,
             title = "title",
+            lectureTime = LocalDateTime.of(2024, 4, 1, 15, 0),
             maxParticipants = 30,
             registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
         )
@@ -68,10 +69,12 @@ class LectureServiceTest {
     fun `최대 수강 인원을 포함한 강의 정보가 주어지고, 주어진 정보로 신규 강의를 생성한다`() {
         // given
         val title = "title"
+        val lectureTime = LocalDateTime.of(2024, 4, 1, 15, 0)
         val registrationStartTime = LocalDateTime.of(2024, 4, 1, 12, 0)
         val maxParticipants = 30
         val expectedResult = Lecture(
             title = title,
+            lectureTime = lectureTime,
             registrationStartTime = registrationStartTime,
             maxParticipants = maxParticipants,
             id = 1L
@@ -80,7 +83,7 @@ class LectureServiceTest {
             .willReturn(expectedResult)
 
         // when
-        val actualResult = sut.create(title, registrationStartTime, maxParticipants)
+        val actualResult = sut.create(title, lectureTime, registrationStartTime, maxParticipants)
 
         // then
         then(lectureRepository).should().save(any())
@@ -92,9 +95,11 @@ class LectureServiceTest {
     fun `최대 수강 인원을 제외한 강의 정보가 주어지고, 주어진 정보로 신규 강의를 생성하면, 기본 30으로 최대 수강 인원이 설정된 강의가 생성된다`() {
         // given
         val title = "title"
+        val lectureTime = LocalDateTime.of(2024, 4, 1, 15, 0)
         val registrationStartTime = LocalDateTime.of(2024, 4, 1, 12, 0)
         val expectedResult = Lecture(
             title = title,
+            lectureTime = lectureTime,
             registrationStartTime = registrationStartTime,
             maxParticipants = 30,
             id = 1L
@@ -103,7 +108,7 @@ class LectureServiceTest {
             .willReturn(expectedResult)
 
         // when
-        val actualResult = sut.create(title = title, registrationStartTime = registrationStartTime)
+        val actualResult = sut.create(title, lectureTime, registrationStartTime)
 
         // then
         then(lectureRepository).should().save(any())

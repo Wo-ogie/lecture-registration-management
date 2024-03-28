@@ -24,6 +24,7 @@ class LectureServiceConcurrencyTest @Autowired constructor(
         val maxParticipants = 3
         val lecture = lectureService.create(
             title = "test",
+            lectureTime = LocalDateTime.of(2024, 4, 1, 15, 0),
             registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0),
             maxParticipants = maxParticipants
         )

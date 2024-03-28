@@ -75,6 +75,7 @@ class LectureRegistrationServiceTest {
         val lecture = Lecture(
             id = lectureId,
             title = "test",
+            lectureTime = LocalDateTime.of(2024, 4, 1, 15, 0),
             registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
         )
         val expectedResult = LectureRegistration(
@@ -114,6 +115,7 @@ class LectureRegistrationServiceTest {
         val lecture = Lecture(
             id = lectureId,
             title = "test",
+            lectureTime = LocalDateTime.of(2025, 4, 1, 15, 0),
             registrationStartTime = LocalDateTime.of(2025, 1, 1, 12, 0)
         )
         given(lectureRepository.getByIdWithLock(lectureId))
@@ -136,6 +138,7 @@ class LectureRegistrationServiceTest {
         val lecture = Lecture(
             id = lectureId,
             title = "test",
+            lectureTime = LocalDateTime.of(2024, 4, 1, 15, 0),
             registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
         )
         given(lectureRepository.getByIdWithLock(lectureId))
@@ -162,6 +165,7 @@ class LectureRegistrationServiceTest {
             id = lectureId,
             title = "test",
             maxParticipants = 30,
+            lectureTime = LocalDateTime.of(2024, 4, 1, 15, 0),
             registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
         )
         given(lectureRepository.getByIdWithLock(lectureId))

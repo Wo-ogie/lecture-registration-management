@@ -70,4 +70,4 @@
 
 ## ERD
 
-![hpp-chap2-erd](https://i.ibb.co/TYztvxW/hpp-chap2-erd-3.png)
+![hpp-chap2-erd](https://i.ibb.co/vdVzHV9/hpp-chap2-erd-4.png)

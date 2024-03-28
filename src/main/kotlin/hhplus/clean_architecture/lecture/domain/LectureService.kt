@@ -1,7 +1,5 @@
 package hhplus.clean_architecture.lecture.domain
 
-import hhplus.clean_architecture.lecture.domain.Lecture
-import hhplus.clean_architecture.lecture.domain.LectureRepository
 import hhplus.clean_architecture.lecture.exception.LectureNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -36,10 +34,11 @@ class LectureService(
     @Transactional
     fun create(
         title: String,
+        lectureTime: LocalDateTime,
         registrationStartTime: LocalDateTime,
         maxParticipants: Int = 30,
     ): Lecture {
-        val lecture = Lecture(title, registrationStartTime, maxParticipants)
+        val lecture = Lecture(title, lectureTime, registrationStartTime, maxParticipants)
         return lectureRepository.save(lecture)
     }
 }
