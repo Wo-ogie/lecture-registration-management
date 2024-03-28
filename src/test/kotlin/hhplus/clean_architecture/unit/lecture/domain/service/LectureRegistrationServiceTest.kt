@@ -3,8 +3,8 @@ package hhplus.clean_architecture.unit.lecture.domain.service
 import hhplus.clean_architecture.lecture.domain.entity.Lecture
 import hhplus.clean_architecture.lecture.domain.entity.LectureRegistration
 import hhplus.clean_architecture.lecture.domain.repository.LectureRegistrationRepository
+import hhplus.clean_architecture.lecture.domain.repository.LectureRepository
 import hhplus.clean_architecture.lecture.domain.service.LectureRegistrationService
-import hhplus.clean_architecture.lecture.domain.service.LectureService
 import hhplus.clean_architecture.lecture.exception.LectureRegistrationNotStartedException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
@@ -27,7 +27,7 @@ class LectureRegistrationServiceTest {
     private lateinit var sut: LectureRegistrationService
 
     @Mock
-    private lateinit var lectureService: LectureService
+    private lateinit var lectureRepository: LectureRepository
 
     @Mock
     private lateinit var lectureRegistrationRepository: LectureRegistrationRepository
@@ -83,7 +83,7 @@ class LectureRegistrationServiceTest {
             lectureId = lectureId,
             registrationTime = LocalDateTime.now()
         )
-        given(lectureService.getByIdWithLock(lectureId))
+        given(lectureRepository.getByIdWithLock(lectureId))
             .willReturn(lecture)
         given(lectureRegistrationRepository.existsByUserAndLecture(userId, lectureId))
             .willReturn(false)
@@ -96,7 +96,7 @@ class LectureRegistrationServiceTest {
         val actualResult = sut.register(userId, lectureId)
 
         // then
-        then(lectureService).should().getByIdWithLock(lectureId)
+        then(lectureRepository).should().getByIdWithLock(lectureId)
         then(lectureRegistrationRepository).should().existsByUserAndLecture(userId, lectureId)
         then(lectureRegistrationRepository).should().getCountByLecture(lectureId)
         then(lectureRegistrationRepository).should().save(any())
@@ -116,14 +116,14 @@ class LectureRegistrationServiceTest {
             title = "test",
             registrationStartTime = LocalDateTime.of(2025, 1, 1, 12, 0)
         )
-        given(lectureService.getByIdWithLock(lectureId))
+        given(lectureRepository.getByIdWithLock(lectureId))
             .willReturn(lecture)
 
         // when
         val throwable = catchThrowable { sut.register(userId, lectureId) }
 
         // then
-        then(lectureService).should().getByIdWithLock(lectureId)
+        then(lectureRepository).should().getByIdWithLock(lectureId)
         verifyEveryMocksShouldHaveNoMoreInteractions()
         assertThat(throwable).isInstanceOf(LectureRegistrationNotStartedException::class.java)
     }
@@ -138,7 +138,7 @@ class LectureRegistrationServiceTest {
             title = "test",
             registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
         )
-        given(lectureService.getByIdWithLock(lectureId))
+        given(lectureRepository.getByIdWithLock(lectureId))
             .willReturn(lecture)
         given(lectureRegistrationRepository.existsByUserAndLecture(userId, lectureId))
             .willReturn(true)
@@ -147,7 +147,7 @@ class LectureRegistrationServiceTest {
         val throwable = catchThrowable { sut.register(userId, lectureId) }
 
         // then
-        then(lectureService).should().getByIdWithLock(lectureId)
+        then(lectureRepository).should().getByIdWithLock(lectureId)
         then(lectureRegistrationRepository).should().existsByUserAndLecture(userId, lectureId)
         verifyEveryMocksShouldHaveNoMoreInteractions()
         assertThat(throwable).isInstanceOf(hhplus.clean_architecture.lecture.exception.LectureAlreadyRegisteredException::class.java)
@@ -164,7 +164,7 @@ class LectureRegistrationServiceTest {
             maxParticipants = 30,
             registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
         )
-        given(lectureService.getByIdWithLock(lectureId))
+        given(lectureRepository.getByIdWithLock(lectureId))
             .willReturn(lecture)
         given(lectureRegistrationRepository.existsByUserAndLecture(userId, lectureId))
             .willReturn(false)
@@ -175,7 +175,7 @@ class LectureRegistrationServiceTest {
         val throwable = catchThrowable { sut.register(userId, lectureId) }
 
         // then
-        then(lectureService).should().getByIdWithLock(lectureId)
+        then(lectureRepository).should().getByIdWithLock(lectureId)
         then(lectureRegistrationRepository).should().existsByUserAndLecture(userId, lectureId)
         then(lectureRegistrationRepository).should().getCountByLecture(lectureId)
         verifyEveryMocksShouldHaveNoMoreInteractions()
@@ -183,7 +183,7 @@ class LectureRegistrationServiceTest {
     }
 
     private fun verifyEveryMocksShouldHaveNoMoreInteractions() {
-        then(lectureService).shouldHaveNoMoreInteractions()
+        then(lectureRepository).shouldHaveNoMoreInteractions()
         then(lectureRegistrationRepository).shouldHaveNoMoreInteractions()
     }
 }

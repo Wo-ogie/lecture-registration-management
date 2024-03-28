@@ -2,6 +2,7 @@ package hhplus.clean_architecture.lecture.domain.service
 
 import hhplus.clean_architecture.lecture.domain.entity.LectureRegistration
 import hhplus.clean_architecture.lecture.domain.repository.LectureRegistrationRepository
+import hhplus.clean_architecture.lecture.domain.repository.LectureRepository
 import hhplus.clean_architecture.lecture.exception.LectureAlreadyRegisteredException
 import hhplus.clean_architecture.lecture.exception.LectureCapacityExceededException
 import hhplus.clean_architecture.lecture.exception.LectureRegistrationNotStartedException
@@ -12,7 +13,7 @@ import java.time.LocalDateTime
 @Transactional(readOnly = true)
 @Service
 class LectureRegistrationService(
-    private val lectureService: LectureService,
+    private val lectureRepository: LectureRepository,
     private val lectureRegistrationRepository: LectureRegistrationRepository,
 ) {
 
@@ -49,7 +50,7 @@ class LectureRegistrationService(
      */
     @Transactional
     fun register(userId: Long, lectureId: Long): LectureRegistration {
-        val lecture = lectureService.getByIdWithLock(lectureId)
+        val lecture = lectureRepository.getByIdWithLock(lectureId)
         val now = LocalDateTime.now()
 
         if (now.isBefore(lecture.registrationStartTime)) {
