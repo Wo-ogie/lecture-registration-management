@@ -1,8 +1,8 @@
-package hhplus.clean_architecture.lecture.domain.service
+package hhplus.clean_architecture.lecture.domain
 
-import hhplus.clean_architecture.lecture.domain.entity.LectureRegistration
-import hhplus.clean_architecture.lecture.domain.repository.LectureRegistrationRepository
-import hhplus.clean_architecture.lecture.domain.repository.LectureRepository
+import hhplus.clean_architecture.lecture.domain.LectureRegistration
+import hhplus.clean_architecture.lecture.domain.LectureRegistrationRepository
+import hhplus.clean_architecture.lecture.domain.LectureRepository
 import hhplus.clean_architecture.lecture.exception.LectureAlreadyRegisteredException
 import hhplus.clean_architecture.lecture.exception.LectureCapacityExceededException
 import hhplus.clean_architecture.lecture.exception.LectureRegistrationNotStartedException

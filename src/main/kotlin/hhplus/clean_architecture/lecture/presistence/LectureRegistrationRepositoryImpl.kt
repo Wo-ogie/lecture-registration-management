@@ -1,9 +1,8 @@
 package hhplus.clean_architecture.lecture.presistence
 
-import hhplus.clean_architecture.lecture.domain.entity.LectureRegistration
-import hhplus.clean_architecture.lecture.domain.repository.LectureRegistrationRepository
+import hhplus.clean_architecture.lecture.domain.LectureRegistration
+import hhplus.clean_architecture.lecture.domain.LectureRegistrationRepository
 import hhplus.clean_architecture.lecture.exception.LectureNotFoundException
-import hhplus.clean_architecture.lecture.presistence.entity.LectureRegistrationJpaEntity
 import org.springframework.stereotype.Repository
 
 @Repository

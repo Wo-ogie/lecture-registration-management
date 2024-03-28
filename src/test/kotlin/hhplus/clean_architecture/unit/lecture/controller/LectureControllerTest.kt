@@ -2,8 +2,8 @@ package hhplus.clean_architecture.unit.lecture.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import hhplus.clean_architecture.lecture.controller.LectureController
-import hhplus.clean_architecture.lecture.domain.entity.LectureRegistration
-import hhplus.clean_architecture.lecture.domain.service.LectureRegistrationService
+import hhplus.clean_architecture.lecture.domain.LectureRegistration
+import hhplus.clean_architecture.lecture.domain.LectureRegistrationService
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given

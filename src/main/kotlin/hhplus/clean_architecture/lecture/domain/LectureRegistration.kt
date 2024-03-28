@@ -1,4 +1,4 @@
-package hhplus.clean_architecture.lecture.domain.entity
+package hhplus.clean_architecture.lecture.domain
 
 import java.time.LocalDateTime
 

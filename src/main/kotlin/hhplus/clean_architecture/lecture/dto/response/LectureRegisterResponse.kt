@@ -1,6 +1,6 @@
 package hhplus.clean_architecture.lecture.dto.response
 
-import hhplus.clean_architecture.lecture.domain.entity.LectureRegistration
+import hhplus.clean_architecture.lecture.domain.LectureRegistration
 import java.time.LocalDateTime
 
 data class LectureRegisterResponse(

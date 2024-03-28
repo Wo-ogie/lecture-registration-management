@@ -1,6 +1,6 @@
 package hhplus.clean_architecture.lecture.controller
 
-import hhplus.clean_architecture.lecture.domain.service.LectureRegistrationService
+import hhplus.clean_architecture.lecture.domain.LectureRegistrationService
 import hhplus.clean_architecture.lecture.dto.response.CheckLectureRegistrationResponse
 import hhplus.clean_architecture.lecture.dto.response.LectureRegisterResponse
 import org.springframework.http.ResponseEntity

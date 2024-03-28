@@ -1,7 +1,7 @@
-package hhplus.clean_architecture.integration.lecture.domain.service
+package hhplus.clean_architecture.integration.lecture.domain
 
-import hhplus.clean_architecture.lecture.domain.service.LectureRegistrationService
-import hhplus.clean_architecture.lecture.domain.service.LectureService
+import hhplus.clean_architecture.lecture.domain.LectureRegistrationService
+import hhplus.clean_architecture.lecture.domain.LectureService
 import hhplus.clean_architecture.lecture.exception.LectureCapacityExceededException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

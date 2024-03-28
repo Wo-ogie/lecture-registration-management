@@ -1,8 +1,8 @@
-package hhplus.clean_architecture.unit.lecture.domain.service
+package hhplus.clean_architecture.unit.lecture.domain
 
-import hhplus.clean_architecture.lecture.domain.entity.Lecture
-import hhplus.clean_architecture.lecture.domain.repository.LectureRepository
-import hhplus.clean_architecture.lecture.domain.service.LectureService
+import hhplus.clean_architecture.lecture.domain.Lecture
+import hhplus.clean_architecture.lecture.domain.LectureRepository
+import hhplus.clean_architecture.lecture.domain.LectureService
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.DisplayName

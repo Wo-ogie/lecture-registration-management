@@ -1,6 +1,6 @@
-package hhplus.clean_architecture.lecture.presistence.entity
+package hhplus.clean_architecture.lecture.presistence
 
-import hhplus.clean_architecture.lecture.domain.entity.LectureRegistration
+import hhplus.clean_architecture.lecture.domain.LectureRegistration
 import jakarta.persistence.*
 import java.time.LocalDateTime
 

@@ -1,10 +1,10 @@
-package hhplus.clean_architecture.unit.lecture.domain.service
+package hhplus.clean_architecture.unit.lecture.domain
 
-import hhplus.clean_architecture.lecture.domain.entity.Lecture
-import hhplus.clean_architecture.lecture.domain.entity.LectureRegistration
-import hhplus.clean_architecture.lecture.domain.repository.LectureRegistrationRepository
-import hhplus.clean_architecture.lecture.domain.repository.LectureRepository
-import hhplus.clean_architecture.lecture.domain.service.LectureRegistrationService
+import hhplus.clean_architecture.lecture.domain.Lecture
+import hhplus.clean_architecture.lecture.domain.LectureRegistration
+import hhplus.clean_architecture.lecture.domain.LectureRegistrationRepository
+import hhplus.clean_architecture.lecture.domain.LectureRepository
+import hhplus.clean_architecture.lecture.domain.LectureRegistrationService
 import hhplus.clean_architecture.lecture.exception.LectureRegistrationNotStartedException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable

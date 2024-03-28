@@ -1,6 +1,5 @@
 package hhplus.clean_architecture.lecture.presistence
 
-import hhplus.clean_architecture.lecture.presistence.entity.LectureJpaEntity
 import jakarta.persistence.LockModeType
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Lock

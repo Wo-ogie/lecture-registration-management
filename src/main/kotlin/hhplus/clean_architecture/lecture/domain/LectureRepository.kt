@@ -1,6 +1,6 @@
-package hhplus.clean_architecture.lecture.domain.repository
+package hhplus.clean_architecture.lecture.domain
 
-import hhplus.clean_architecture.lecture.domain.entity.Lecture
+import hhplus.clean_architecture.lecture.domain.Lecture
 import hhplus.clean_architecture.lecture.exception.LectureNotFoundException
 
 interface LectureRepository {

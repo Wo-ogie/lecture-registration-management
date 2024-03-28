@@ -1,7 +1,7 @@
-package hhplus.clean_architecture.lecture.domain.service
+package hhplus.clean_architecture.lecture.domain
 
-import hhplus.clean_architecture.lecture.domain.entity.Lecture
-import hhplus.clean_architecture.lecture.domain.repository.LectureRepository
+import hhplus.clean_architecture.lecture.domain.Lecture
+import hhplus.clean_architecture.lecture.domain.LectureRepository
 import hhplus.clean_architecture.lecture.exception.LectureNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
