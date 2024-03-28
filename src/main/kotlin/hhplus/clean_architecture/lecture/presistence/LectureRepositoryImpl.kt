@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository
 class LectureRepositoryImpl(
     private val lectureJpaRepository: LectureJpaRepository,
 ) : LectureRepository {
-
     override fun getById(lectureId: Long): Lecture {
         return lectureJpaRepository.findById(lectureId)
             .orElseThrow(::LectureNotFoundException)
@@ -20,6 +19,11 @@ class LectureRepositoryImpl(
         return lectureJpaRepository.findByIdWithLock(lectureId)
             .orElseThrow(::LectureNotFoundException)
             .toDomain()
+    }
+
+    override fun findAll(): List<Lecture> {
+        return lectureJpaRepository.findAll()
+            .map(LectureJpaEntity::toDomain)
     }
 
     override fun save(lecture: Lecture): Lecture {

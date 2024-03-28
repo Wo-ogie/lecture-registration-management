@@ -8,6 +8,7 @@ import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.BDDMockito
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
@@ -63,6 +64,29 @@ class LectureServiceTest {
         then(lectureRepository).should().getById(lectureId)
         verifyEveryMocksShouldHaveNoMoreInteractions()
         assertThat(throwable).isInstanceOf(hhplus.clean_architecture.lecture.exception.LectureNotFoundException::class.java)
+    }
+
+    @Test
+    fun `전체 강의 목록을 조회한다`() {
+        // given
+        val expectedResult = listOf(
+            Lecture(
+                id = 1L,
+                title = "test",
+                lectureTime = LocalDateTime.of(2024, 4, 1, 15, 0),
+                registrationStartTime = LocalDateTime.of(2024, 3, 1, 12, 0)
+            )
+        )
+        BDDMockito.given(lectureRepository.findAll())
+            .willReturn(expectedResult)
+
+        // when
+        val actualResult = sut.findAll()
+
+        // then
+        BDDMockito.then(lectureRepository).should().findAll()
+        verifyEveryMocksShouldHaveNoMoreInteractions()
+        assertThat(actualResult).hasSize(expectedResult.size)
     }
 
     @Test

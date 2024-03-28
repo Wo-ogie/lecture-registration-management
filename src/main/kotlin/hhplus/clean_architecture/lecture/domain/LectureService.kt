@@ -24,6 +24,15 @@ class LectureService(
     }
 
     /**
+     * 전체 강의 목록을 조회한다.
+     *
+     * @return 전체 강의 리스트
+     */
+    fun findAll(): List<Lecture> {
+        return lectureRepository.findAll()
+    }
+
+    /**
      * 새로운 강의를 생성한다.
      *
      * @param title 강의 제목

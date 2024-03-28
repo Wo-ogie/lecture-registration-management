@@ -11,5 +11,7 @@ interface LectureRepository {
     @Throws(LectureNotFoundException::class)
     fun getByIdWithLock(lectureId: Long): Lecture
 
+    fun findAll(): List<Lecture>
+
     fun save(lecture: Lecture): Lecture
 }
