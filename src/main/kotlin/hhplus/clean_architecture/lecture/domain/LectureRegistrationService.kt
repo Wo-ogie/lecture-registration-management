@@ -53,18 +53,15 @@ class LectureRegistrationService(
         val lecture = lectureRepository.getByIdWithLock(lectureId)
         val now = LocalDateTime.now()
 
-        if (now.isBefore(lecture.registrationStartTime)) {
-            throw LectureRegistrationNotStartedException()
-        }
-
         if (lectureRegistrationRepository.existsByUserAndLecture(userId, lectureId)) {
             throw LectureAlreadyRegisteredException()
         }
 
         val currentParticipants = lectureRegistrationRepository.getCountByLecture(lectureId)
-        if (currentParticipants >= lecture.maxParticipants) {
-            throw LectureCapacityExceededException()
-        }
+        lecture.validateRegistrationAvailable(
+            nowDateTime = now,
+            currentParticipantCount = currentParticipants
+        )
 
         return lectureRegistrationRepository.save(
             LectureRegistration(

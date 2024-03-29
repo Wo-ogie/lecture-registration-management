@@ -120,12 +120,18 @@ class LectureRegistrationServiceTest {
         )
         given(lectureRepository.getByIdWithLock(lectureId))
             .willReturn(lecture)
+        given(lectureRegistrationRepository.existsByUserAndLecture(userId, lectureId))
+            .willReturn(false)
+        given(lectureRegistrationRepository.getCountByLecture(lectureId))
+            .willReturn(0)
 
         // when
         val throwable = catchThrowable { sut.register(userId, lectureId) }
 
         // then
         then(lectureRepository).should().getByIdWithLock(lectureId)
+        then(lectureRegistrationRepository).should().existsByUserAndLecture(userId, lectureId)
+        then(lectureRegistrationRepository).should().getCountByLecture(lectureId)
         verifyEveryMocksShouldHaveNoMoreInteractions()
         assertThat(throwable).isInstanceOf(LectureRegistrationNotStartedException::class.java)
     }
